@@ -1,2 +1,2 @@
-[FILE1](ASD)
-[filSS2](SDF)
+[FILE1](https://<username>.github.io/<repo-name>/pdfs.txt)
+[filSS2](https://<username>.github.io/<repo-name>/pdfs.txt)
