@@ -1,2 +1,2 @@
-[FILE1](https://<username>.github.io/<repo-name>/pdfs.txt)
+[FILE1](https://dl.dropboxusercontent.com/scl/fi/k134bvh8y0x6u83er9epg/Solid-State-Electronic-Devices-Sixth-Edition.pdf?rlkey=6u2hgdkpl8wjzf7w501tjhry9&st=28qziw5r)
 [filSS2](https://<username>.github.io/<repo-name>/pdfs.txt)
