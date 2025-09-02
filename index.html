@@ -10,22 +10,24 @@
       background-color: #f8f9fa;
       color: #333;
       margin: 0;
-      padding: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh; /* full page height */
     }
     h1 {
       text-align: center;
-      margin: 30px 0;
+      margin: 20px 0;
       font-weight: normal;
     }
     ul {
       list-style: none;
-      padding: 0;
+      padding: 0 20px;
       max-width: 600px;
-      margin: auto;
+      margin: 0 auto 20px auto;
     }
     li {
       background: white;
-      margin: 10px 20px;
+      margin: 10px 0;
       padding: 15px 20px;
       border: 1px solid #ddd;
       border-radius: 5px;
@@ -39,69 +41,62 @@
       color: #007bff;
       font-size: 18px;
       display: block;
+      cursor: pointer;
     }
     a:hover {
       text-decoration: underline;
     }
     #viewer {
+      flex-grow: 1; /* take all remaining space */
       width: 100%;
-      height: calc(100vh - 120px); /* almost full page */
       border: none;
-      display: none;
-      margin-top: 20px;
+      display: none; /* hidden until a PDF is clicked */
     }
   </style>
 </head>
 <body>
 
   <h1>📄 PDF Library</h1>
-  <ul id="pdf-list">
-    <!-- PDF links will be injected here -->
-  </ul>
+  <ul id="pdf-list"></ul>
 
+  <!-- Single viewer at bottom -->
   <iframe id="viewer"></iframe>
 
   <script>
-    async function loadPDFs() {
-      try {
-        const response = await fetch("pdfs.txt"); // pointer to your file
-        const text = await response.text();
-        const lines = text.split("\n").filter(line => line.trim() !== "");
-
-        const list = document.getElementById("pdf-list");
-        const viewer = document.getElementById("viewer");
-
-        lines.forEach(line => {
-          const match = line.match(/\[(.*?)\]\((.*?)\)/);
-          if (match) {
-            const title = match[1];
-            const link = match[2];
-
-            const li = document.createElement("li");
-            const a = document.createElement("a");
-
-            a.textContent = title;
-            a.href = "#";
-
-            a.onclick = () => {
-              viewer.src = link;
-              viewer.style.display = "block";
-              window.scrollTo({ top: viewer.offsetTop - 20, behavior: "smooth" });
-              return false;
-            };
-
-            li.appendChild(a);
-            list.appendChild(li);
-          }
-        });
-      } catch (err) {
-        console.error("Error loading pdfs.txt", err);
-        document.getElementById("pdf-list").innerHTML =
-          "<li>Failed to load PDFs.</li>";
+    // 🔹 Define your PDFs here
+    const pdfs = [
+      {
+        title: "Solid State Electronic Devices - 6th Edition",
+        link: "https://dl.dropboxusercontent.com/scl/fi/k134bvh8y0x6u83er9epg/Solid-State-Electronic-Devices-Sixth-Edition.pdf?rlkey=6u2hgdkpl8wjzf7w501tjhry9&st=28qziw5r"
+      },
+      {
+        title: "Engineering Mechanics",
+        link: "https://example.com/engg_mechanics.pdf"
+      },
+      {
+        title: "Thermodynamics Notes",
+        link: "https://example.com/thermo.pdf"
       }
-    }
+    ];
 
-    loadPDFs();
+    const list = document.getElementById("pdf-list");
+    const viewer = document.getElementById("viewer");
+
+    pdfs.forEach(pdf => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+
+      a.textContent = pdf.title;
+
+      a.onclick = () => {
+        viewer.src = pdf.link;
+        viewer.style.display = "block"; // show bottom viewer
+        return false;
+      };
+
+      li.appendChild(a);
+      list.appendChild(li);
+    });
   </script>
 </body>
 </html>
