@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PDF Library</title>
+  <meta charset="UTF-8">
+  <title>PDF Hoster</title>
   <style>
     body {
       font-family: 'Times New Roman', serif;
-      background-color: #f8f9fa;
-      color: #333;
+      background-color: #fff; /* changed to white */
+      color: #111; /* changed to near-black */
       margin: 0;
       display: flex;
       flex-direction: column;
@@ -18,84 +17,276 @@
       text-align: center;
       margin: 20px 0;
       font-weight: normal;
+      color: #111; /* ensure black */
     }
-    ul {
-      list-style: none;
-      padding: 0 20px;
-      max-width: 600px;
-      margin: 0 auto 20px auto;
+    .pdf-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 40px;
+      gap: 18px;
     }
-    li {
-      background: white;
-      margin: 10px 0;
-      padding: 15px 20px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      transition: box-shadow 0.3s;
+    .pdf-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
-    li:hover {
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    }
-    a {
-      text-decoration: none;
-      color: #007bff;
-      font-size: 18px;
-      display: block;
+    button {
+      --color: #111;
+      font-family: 'Segoe UI black', 'Roboto', 'Arial', sans-serif;
+      display: inline-block;
+      width: 16em;
+      height: 2.6em;
+      line-height: 2.5em;
+      overflow: hidden;
       cursor: pointer;
+      font-size: 17px;
+      z-index: 1;
+      color: var(--color);
+      border: 2px solid var(--color);
+      border-radius: 6px;
+      position: relative;
+      background: transparent;
+      transition: color 0.3s;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
-    a:hover {
-      text-decoration: underline;
+    .pdf-btn-text {
+      display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      
+      white-space: nowrap;
+      transition: none;
     }
-    #viewer {
-      flex-grow: 1; /* take all remaining space */
-      width: 100%;
-      border: none;
-      display: none; /* hidden until a PDF is clicked */
+    button:hover .pdf-btn-text.marquee {
+      animation: marquee 4s linear infinite;
+      white-space: nowrap;
+      overflow: visible;
+      text-overflow: unset;
+      max-width: none;
     }
+    @keyframes marquee {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  20% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  90% {
+    transform: translateX(-100%);
+    opacity: 1;
+  }
+  91% {
+    transform: translateX(-100%);
+    opacity: 0; /* fade out */
+  }
+  96% {
+    transform: translateX(0);
+    opacity: 0; /* reset position while invisible */
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1; /* fade back in */
+  }
+}
+    /* code02 styles */
+    .installer {
+      
+        font-family: 'Segoe UI black', 'Roboto', 'Arial', sans-serif; /* updated font-family */
+  width: 200px;
+  height: 2.6em; /* changed from 40px to 2.6em */
+}
+
+.installer label {
+  position: absolute;
+  height: 2.6em; /* changed from 40px to 2.6em */
+  width: 200px;
+  border-radius: 5px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.installer label input {
+  display: none;
+}
+
+.installer label span {
+  position: absolute;
+  height: 2.9em; /* changed from 40px to 2.6em */
+  width: 200px;
+  line-height: 2.6em; /* changed from 40px to 2.6em */
+  text-align: center;
+  color: #fff; /* white */
+  background: #222; /* dark gray */
+  border-radius: 5px;
+}
+
+.installer label input:checked ~ span {
+  background: #555; /* lighter gray for success */
+  animation: downloadSuccess 3.1s ease;
+}
+
+.installer label span:after {
+  content: 'Download';
+  position: absolute;
+  width: 80%;
+  height: 100%;
+  left: 10%;
+  color: #fff; /* white */
+}
+
+.installer label input:checked ~ span:after {
+  content: 'Thank you!';
+  animation: downloadState 3s;
+  color: #fff; /* white */
+}
+
+.installer label span:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  opacity: 0;
+  background: rgba(0,0,0,.1); /* subtle black overlay */
+}
+
+.installer label input:checked ~ span:before {
+  animation: downloadProgress 3s cubic-bezier(.67,.13,.1,.81);
+}
+
+@keyframes downloadSuccess {
+  0%, 80% {
+    background: #555; /* dark gray */
+  }
+
+  100% {
+    background: #555; /* lighter gray */
+  }
+}
+
+@keyframes downloadState {
+  0%, 85% {
+    content: 'Downloading...'
+  }
+
+  100% {
+    content: 'Thank you!'
+  }
+}
+
+@keyframes downloadProgress {
+  0% {
+    width: 5%;
+    opacity: 1;
+  }
+
+  35% {
+    width: 17%;
+  }
+
+  64% {
+    width: 51%;
+  }
+
+  81% {
+    width: 70%;
+  }
+
+  90% {
+    width: 86%;
+    opacity: 1;
+  }
+
+  100% {
+    width: 100%;
+    opacity: 0;
+  }
+}
   </style>
 </head>
 <body>
-
-  <h1>📄 PDF Library</h1>
-  <ul id="pdf-list"></ul>
-
-  <!-- Single viewer at bottom -->
-  <iframe id="viewer"></iframe>
-
+  <h1>📄 PDF Viewer</h1>
+  <div class="pdf-list" id="pdfList"></div>
+  <div style="display:flex; justify-content:center; margin-top:40px;">
+    <iframe id="pdfFrame" src="" width="70%" height="600px" style="border:1px solid #ccc; background:#fff; border-radius:8px; display:none;"></iframe>
+  </div>
   <script>
-    // 🔹 Define your PDFs here
+    // PDF data stored in const array
     const pdfs = [
       {
-        title: "Solid State Electronic Devices - 6th Edition",
-        link: "https://dl.dropboxusercontent.com/scl/fi/k134bvh8y0x6u83er9epg/Solid-State-Electronic-Devices-Sixth-Edition.pdf?rlkey=6u2hgdkpl8wjzf7w501tjhry9&st=28qziw5r"
+        name: "Advanced Semiconductor Fundamentals - Robert F. Pirret",
+        view: "HqzdmpzL",
+        
       },
       {
-        title: "Engineering Mechanics",
-        link: "https://example.com/engg_mechanics.pdf"
+        name: "Solid State Physics - S.O. Pillai",
+        view: "Km2Ukdyw"        
       },
       {
-        title: "Thermodynamics Notes",
-        link: "https://example.com/thermo.pdf"
+        name: "Solid State Electronic Devices - Ben G. Streetman",
+        view: "KjD5y7dX",
+        
       }
     ];
 
-    const list = document.getElementById("pdf-list");
-    const viewer = document.getElementById("viewer");
+    const pdfList = document.getElementById('pdfList');
+    pdfs.forEach((pdf, idx) => {
+      const row = document.createElement('div');
+      row.className = 'pdf-row';
 
-    pdfs.forEach(pdf => {
-      const li = document.createElement("li");
-      const a = document.createElement("a");
-
-      a.textContent = pdf.title;
-
-      a.onclick = () => {
-        viewer.src = pdf.link;
-        viewer.style.display = "block"; // show bottom viewer
-        return false;
+      // code01 button
+      const viewBtn = document.createElement('button');
+      // Create span for text
+      const textSpan = document.createElement('span');
+      textSpan.className = 'pdf-btn-text';
+      textSpan.textContent = pdf.name;
+      viewBtn.appendChild(textSpan);
+      viewBtn.onmouseenter = () => {
+        // If name is truncated, enable marquee
+        if (textSpan.scrollWidth > textSpan.offsetWidth) {
+          textSpan.classList.add('marquee');
+        }
       };
+      viewBtn.onmouseleave = () => {
+        textSpan.classList.remove('marquee');
+      };
+      viewBtn.onclick = () => {
+        const frame = document.getElementById('pdfFrame');
+        frame.src = `https://pixeldrain.com/u/${pdf.view}?embed`;
+        frame.style.display = 'block';
+      };
+      row.appendChild(viewBtn);
 
-      li.appendChild(a);
-      list.appendChild(li);
+      // code02 button (radio, waits for animation then downloads)
+      const installer = document.createElement('div');
+      installer.className = 'installer';
+      const radioId = `progress${idx}`;
+      installer.innerHTML = `
+        <label for="${radioId}">
+          <input id="${radioId}" type="radio">
+          <span></span>
+        </label>
+      `;
+      row.appendChild(installer);
+
+      // Wait for animation then redirect
+      setTimeout(() => {
+        const input = installer.querySelector('input');
+        input.addEventListener('change', function () {
+          setTimeout(() => {
+            window.open(`https://pixeldrain.com/api/file/${pdf.view}?download`, '_blank');
+            input.checked = false; // Reset for next click
+          }, 3100); // matches animation duration
+        });
+      }, 0);
+
+      pdfList.appendChild(row);
     });
   </script>
 </body>
