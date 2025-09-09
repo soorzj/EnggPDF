@@ -4,7 +4,7 @@
 
 > ⚡ A curated collection of essential **Engineering PDFs** for quick reference and study.  
  
-#### OPEN THE LIBRARY: [🔲](https://soorzj.github.io/EnggPDF/)
+#### OPEN THE LIBRARY: [ soorzj.github.io/EnggPDF 🔗](https://soorzj.github.io/EnggPDF/)
 ---
 ## 🏷️ Quick Glance  
 
